@@ -1,0 +1,574 @@
+#  Trigger: what will trigger the enchant into giving the effect. Types:
+#    - EQUIPT
+#    - MOB_KILL
+#    - PLAYER_KILL
+#    - DAMAGE_PLAYER_WEAPON
+#    - DAMAGE_PLAYER_BOW
+#    - BOW_FIRE
+#    - BLOCK_BREAK
+#    - FISH_CATCH
+#    - ITEM_DAMAGE
+#    - ITEM_HOLD
+#    - FOOD_CHANGE
+
+
+#    Type: Decides what the enchant can be applied to:
+#    - Boots
+#    - Leggings
+#    - Chestplate
+#    - Helmet
+#    - Sword
+#    - Axe
+#    - Bow
+#    - Weapons
+#    - Tools
+#    - Armor
+
+
+#    Player: Decides what player the enchant should be on USED WITH: PLAYER_KILL, DAMAGE_PLAYER_WEAPON, DAMAGE_PLAYER_BOW
+#    - %victim% the player that is being attacked
+#    - %attacker% the person attacking
+
+
+#    Effects: Decides what Effects the enchant will have Types:
+#    - POTION:<Type>:<Level>  USED WITH: ITEM_HOLD, EQUIPT Gives the player A perminate Potion effect (Will remove once the player has stoped wearing/holding the enchant)
+#    - POTION:<Type>:<Level>:<Time>:<Player>  USED WITH: MOB_KILL, PLAYER_KILL, DAMAGE_PLAYER_WEAPON, DAMAGE_PLAYER_BOW, BLOCK_BREAK, FISH_CATCH Gives the player a temperery potion effect
+#    - FROSTY USED WITH: ITEM_HOLD, EQUIPT  Gives the player a trail of snow which also turns water into ice
+#    - MAXHP_INCREASE:<Amount> USED WITH: ITEM_HOLD, EQUIPT  Increases the players maxhp by a specified number 1 heart = 2
+#    - MOBCOINS:SETCOINS:<Amount> USED WITH: MOB_KILL hooks into my Mobcoins plugin and sets the amount of mobcoins the player will get (Only works if the player gets a mobcoin to start with)
+#    - ARMOR_DAMAGE_INCREASE:<Amount> USED WITH: ITEM_DAMAGE increases the amount of damage a players armor takes
+#    - ARMOR_DAMAGE_DECREASE:<Amount> USED WITH: ITEM_DAMAGE decreases the amount of damage a players armor takes
+#    - XP:<amount> USED WITH: MOB_KILL Multiplies the current xp by <Amount>
+#    - MULTISHOT:<Amount> USED WITH: BOW_FIRE Fires <Amount> more arrows when firing a bow
+#    - HEAL:<Amount>:  USED WITH: ALL Player Heals a palyer a set amount
+#    - Infusion:<Amount> USED WITH: BLOCK_BREAK Breaks all blocks in an <Amount> radius from the block broken
+#    - DROPHEAD:<Player> USED WITH: PLAYER_KILL Drops <Player> head
+#    - FIRE:<TIME>:<Player> USED WITH: DAMAGE_PLAYER_WEAPON, DAMAGE_PLAYER_BOW Sets the player on fire for an amount of time 20 = 1 second
+#    - FEED:<Amount> USED WITH: FOOD_CHANGE  Feeds a player
+#    - SMELT USED WITH: BLOCK_BREAK Smelts all blocks
+#    - EXPLODE USED WITH: ALL Creates an explosion
+#    - FLY:<Player> USED WITH: ALL Makes a player able to fly
+#    - FLY:<Player>:<Time> USED WITH: ALL Makes a player able to fly for a certain amount of time <Time> = seconds
+#    - COOK USED WITH: FISH_CATCH Automaticly Cooks the fis
+#    - CATCH:<Amount> USED WITH: FISH_CATCH  Doubles/Triples the loot from fishing
+#    - FROSTBITE:<Player> USED WITH: PLAYER_DAMAGE_BOW, PLAYER_DAMAGE_WEAPONS Traps the player in ice
+#    - LIGHTNING:<Player>  USED WITH: PLAYER_DAMAGE_BOW, PLAYER_DAMAGE_WEAPONS Summons lightning at the players location
+#    - DAMAGE_INCREASE:<Amount>  USED WITH: PLAYER_DAMAGE_BOW, PLAYER_DAMAGE_WEAPONS Doubles/Triples/Quadruples the damage
+#    - INSTANT_BREAK USED WITH: BLOCK_BREAK Makes the block break instantly
+
+
+Enchantments:
+  Speed:
+    Enabled: true
+    description: 'Gives you an unlimited Speed effect'
+    Type: 'Boots'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'POTION:SPEED:1'
+      2:
+        effects:
+          - 'POTION:SPEED:2'
+  Jump:
+    Enabled: true
+    description: 'Gives you an unlimited JumpBoost effect'
+    Type: 'Boots'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'POTION:JUMP:1'
+      2:
+        effects:
+          - 'POTION:JUMP:2'
+  Resistance:
+    Enabled: true
+    description: 'Gives you an unlimited Resistance effect'
+    Type: 'Chestplate'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'POTION:DAMAGE_RESISTANCE:1'
+      2:
+        effects:
+          - 'POTION:DAMAGE_RESISTANCE:2'
+  Visionary:
+    Enabled: true
+    description: 'Gives you an unlimited Night Vision effect'
+    Type: 'Helmet'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'POTION:NIGHT_VISION:1'
+  Frosty:
+    Enabled: true
+    description: 'Gives you a snow trail when you walk'
+    Type: 'boots'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'FROSTY'
+          - 'PARTICLE:FROSTY'
+  Aquatic:
+    Enabled: true
+    description: 'Gives you an unlimited Water Breathihg effect'
+    Type: 'Helmet'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+          - 'POTION:WATER_BREATHING:1'
+  Netherskin:
+    Enabled: true
+    description: 'Gives you an unlimited Fire Resistance effect'
+    Type: 'Chestplate'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+        - 'POTION:FIRE_RESISTANCE:1'
+  Rage:
+    Enabled: true
+    description: 'Gives you an unlimited Strength effect'
+    Type: 'Chestplate'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+        - 'POTION:INCREASE_DAMAGE:1'
+      2:
+        effects:
+        - 'POTION:INCREASE_DAMAGE:2'
+  Jacket:
+    Enabled: true
+    description: 'Increases your Max HP'
+    Type: 'Armor'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+        - 'MAXHP_INCREASE:1'
+      2:
+        effects:
+        - 'MAXHP_INCREASE:2'
+      3:
+        effects:
+        - 'MAXHP_INCREASE:3'
+  Coins:
+    Enabled: true
+    description: 'Gives you extra MobCoins'
+    Type: 'Weapons'
+    Trigger: 'MOB_KILL'
+    levels:
+      1:
+        effects:
+        - 'MOBCOINS:SETCOINS:2'
+      2:
+        effects:
+        - 'MOBCOINS:SETCOINS:3'
+      3:
+        effects:
+        - 'MOBCOINS:SETCOINS:4'
+  Assassinate:
+    Enabled: true
+    description: 'Gives you an unlimited Haste effect'
+    Type: 'Weapons'
+    Trigger: 'ITEM_HOLD'
+    levels:
+      1:
+        effects:
+        - 'POTION:FAST_DIGGING:1'
+      2:
+        effects:
+        - 'POTION:FAST_DIGGING:2'
+  Haste:
+    Enabled: true
+    description: 'Gives you an unlimited Haste effect'
+    Type: 'Tools'
+    Trigger: 'ITEM_HOLD'
+    levels:
+      1:
+        effects:
+        - 'POTION:FAST_DIGGING:1'
+      2:
+        effects:
+        - 'POTION:FAST_DIGGING:2'
+  Nausea:
+    Enabled: true
+    description: 'Chance to confiuse your enemies'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:Confusion:1:20:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:Confusion:1:30:%victim%'
+  Penetrate:
+    Enabled: true
+    description: 'Deals more damange to opponents armor'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        effects:
+        - 'ARMOR_DAMAGE_INCREASE:2'
+      2:
+        effects:
+        - 'ARMOR_DAMAGE_INCREASE:3'
+  Evade:
+    Enabled: true
+    description: 'Chance to dodge opponents attacks'
+    Type: 'Armor'
+    Trigger: 'Damage_Player_Weapon'
+    Player: '%victim%'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'SETDAMAGE:0'
+      2:
+        chance: 10
+        effects:
+        - 'SETDAMAGE:0'
+  Paralyze:
+    Enabled: true
+    description: 'Chance to paralyze your opponent'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:SLOW:10:6:%victim%'
+        - 'POTION:Jump:-10:6:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:SLOW:10:8:%victim%'
+        - 'POTION:Jump:-10:8:%victim%'
+  Slowness:
+    Enabled: true
+    description: 'Chance to slow your opponent'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:SLOW:1:10:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:SLOW:2:10:%victim%'
+  Blindness:
+    Enabled: true
+    description: 'Chance to blind your opponent'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:Blindness:1:10:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:Blindness:1:12:%victim%'
+  Poison:
+    Enabled: true
+    description: 'Chance to poison your opponent'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:Poison:1:10:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:Poison:2:10:%victim%'
+  Wither:
+    Enabled: true
+    description: 'Chance to give your opponent wither aspect'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:Wither:1:10:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:Wither:2:10:%victim%'
+  Warden:
+    Enabled: true
+    description: 'Chance to give your opponent Mining Fatuige and you Haste'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    Player: '%attacker%'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'POTION:SLOW_DIGGING:1:10:%victim%'
+        - 'POTION:FAST_DIGGING:1:10:%attacker%'
+      2:
+        chance: 10
+        effects:
+        - 'POTION:Wither:2:10:%victim%'
+  Reborn:
+    Enabled: true
+    description: 'You drain your enemies life essence healing yourself'
+    Type: 'Weapons'
+    Trigger: 'PLAYER_KILL'
+    levels:
+      1:
+        effects:
+        - 'POTION:ABSORBTION:1:10'
+        - 'POTION:RESISTANCE:1:10'
+        - 'POTION:REGENERATION:1:10'
+      2:
+        effects:
+        - 'POTION:ABSORBTION:2:10'
+        - 'POTION:RESISTANCE:2:10'
+        - 'POTION:REGENERATION:2:10'
+  Inquisitive:
+    Enabled: true
+    description: 'You recieve extra xp for killing a mob'
+    Type: 'Weapons'
+    Trigger: 'MOB_KILL'
+    levels:
+      1:
+        effects:
+        - 'XP:2'
+      2:
+        effects:
+        - 'XP:3'
+  Hardened:
+    Enabled: true
+    description: 'Your armor takes less damage'
+    Type: 'Armor'
+    Trigger: 'ITEM_DAMAGE'
+    levels:
+      1:
+        effects:
+        - 'ARMOR_DAMAGE_DECREASE:2'
+      2:
+        effects:
+        - 'ARMOR_DAMAGE_DECREASE:3'
+  Multishot:
+    Enabled: true
+    description: 'You fire extra arrows'
+    Type: 'Bow'
+    Trigger: 'BOW_FIRE'
+    levels:
+      1:
+        effects:
+        - 'MULTISHOT:1'
+      2:
+        effects:
+        - 'MULTISHOT:2'
+  Lifesteal:
+    Enabled: true
+    description: 'Chance to steal your opponents health'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'HEAL:4:%attacker%'
+      2:
+        chance: 10
+        effects:
+        - 'HEAL:4:%attacker%'
+  Infusion:
+    Enabled: true
+    description: 'Breaks blocks in an area around you'
+    Type: 'Tools'
+    Trigger: 'BLOCK_BREAK'
+    levels:
+      1:
+        effects:
+        - 'INFUSION:1'
+      2:
+        effects:
+        - 'INFUSION:2'
+  Decapitate:
+    Enabled: true
+    description: 'Drops the players head upon death'
+    Type: 'Weapons'
+    Trigger: 'PLAYER_KILL'
+    levels:
+      1:
+        effects:
+        - 'DROPHEAD:%Victim%'
+  Ignition:
+    Enabled: true
+    description: 'Chance to set your attacker on fire'
+    Type: 'Chestplate'
+    Trigger: 'Damage_Player_Weapon'
+    Player: '%victim%'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'FIRE:100:%attacker%'
+      2:
+        chance: 10
+        effects:
+        - 'FIRE:200:%attacker%'
+  Replenish:
+    Enabled: true
+    description: 'Replenish Your hunger'
+    Type: 'Helmet'
+    Trigger: 'FOOD_CHANGE'
+    levels:
+      1:
+        effects:
+        - 'FEED:2'
+  BlazingTouch:
+    Enabled: true
+    description: 'Automaticly Smelts ores'
+    Type: 'Tools'
+    Trigger: 'BLOCK_BREAK'
+    levels:
+      1:
+        effects:
+        - 'SMELT'
+        - 'PARTICLE:MOBSPAWNER_FLAMES'
+  Flare:
+    Enabled: true
+    description: 'Chance for your arrows to explode'
+    Type: 'BOW'
+    Trigger: 'BOW_FIRE'
+    levels:
+      1:
+        effects:
+        - 'EXPLODE'
+        - 'PARTICLE:FLAME'
+  Wings:
+    Enabled: true
+    description: 'Chance for your arrows to explode'
+    Type: 'Boots'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        condition: 'INTERRITORY'
+        effects:
+        - 'FLY'
+  Saviour:
+    Enabled: true
+    description: 'Give nearby Allies Regeneration'
+    Type: 'Chestplate'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+        - 'ALLIES:POTION:REGENERATION:1'
+  Leader:
+    Enabled: true
+    description: 'Give nearby Allies Haste'
+    Type: 'Chestplate'
+    Trigger: 'EQUIPT'
+    levels:
+      1:
+        effects:
+        - 'ALLIES:POTION:FAST_DIGGING:1'
+      2:
+        effects:
+        - 'ALLIES:POTION:FAST_DIGGING:2'
+  Enlightened:
+    Enabled: true
+    description: 'Chance to heal you when getting attacked'
+    Type: 'Chestplate'
+    Trigger: 'Damage_Player_Weapon'
+    Player: '%victim%'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'HEAL:4:%victim%'
+      2:
+        chance: 10
+        effects:
+        - 'HEAL:6:%victim%'
+      3:
+        chance: 10
+        effects:
+        - 'HEAL:8:%victim%'
+  Cook:
+    Enabled: true
+    description: 'Automaticly Cooks your fish'
+    Type: 'Rod'
+    Trigger: 'FISH_CATCH'
+    levels:
+      1:
+        effects:
+        - 'COOK'
+  Catch:
+    Enabled: true
+    description: 'Gives you extra fish'
+    Type: 'Rod'
+    Trigger: 'FISH_CATCH'
+    levels:
+      1:
+        effects:
+        - 'Catch:1'
+      2:
+        effects:
+        - 'Catch:2'
+      3:
+        effects:
+        - 'Catch:3'
+  Frostbite:
+    Enabled: true
+    description: 'Chance to freeze your target in ice'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapon'
+    Player: '%attacker%'
+    levels:
+      1:
+        chance: 5
+        effects:
+        - 'FROSTBITE:%victim%'
+      2:
+        chance: 7
+        effects:
+        - 'FROSTBITE:%victim%'
+  Headshot:
+    Enabled: true
+    description: 'Increased damage on a bow if you get a headshot'
+    Type: 'Bow'
+    Trigger: 'Damage_Player_Bow'
+    Player: '%attacker%'
+    levels:
+      1:
+        condition: 'HEADSHOT'
+        effects:
+        - 'DAMAGE_INCREASE:2'
+      2:
+        condition: 'HEADSHOT'
+        effects:
+        - 'DAMAGE_INCREASE:3'
+  Thunderousblow:
+    Enabled: true
+    description: 'Chance to smite an enemy'
+    Type: 'Weapons'
+    Trigger: 'Damage_Player_Weapons'
+    Player: '%attacker%'
+    levels:
+      1:
+        chance: 10
+        effects:
+        - 'LIGHTNING:%victim%'

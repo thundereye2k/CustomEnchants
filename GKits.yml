@@ -1,0 +1,12 @@
+Frosty:
+  Item: Snow_ball
+  Name: '&c&lFrosty Kit'
+  Slot: 11
+  Kit:
+    '1':
+      Item: Diamond_sword
+      Name: '&b&lFrost Sword'
+      Amount: 1
+      Enchants:
+      - DAMAGE_ALL 2
+      - Wither II:30

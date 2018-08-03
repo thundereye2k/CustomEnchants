@@ -1,0 +1,16 @@
+name: CustomEnchants
+version: 2.0.4
+description: Providing a new exciting aspect of pvp
+main: com.peaches.customenchants.main.Main
+softdepend: [Vault, Factions, AAC, NoCheatPlus, WorldEdit, WorldGuard, MVdWUpdater, Kingdoms]
+author: Peaches_MLG
+commands:
+  CustomEnchants:
+    description: The Main CustomEnchants Command.
+    aliases: [ce, enchanter]
+  Gkits:
+    description: Opens the Gkits GUI.
+    aliases: [gkit]
+  Tinkerer:
+    description: Opens the Tinkerer GUI.
+    aliases: [Tinker]
