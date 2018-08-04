@@ -51,9 +51,7 @@ public class ArmorEquipt implements Listener {
                                 }
                                 if (effect.contains("PARTICLE:")) {
                                     if (effect1[1] != null) {
-                                        if (plugin.ParticleEffects.containsKey(p)) {
-                                            plugin.ParticleEffects.remove(p);
-                                        }
+                                        plugin.ParticleEffects.remove(p);
                                     }
                                 }
                                 if (effect.contains("FLY")) {

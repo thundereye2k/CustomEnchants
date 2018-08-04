@@ -11,10 +11,12 @@ import org.bukkit.entity.Player;
 
 class FactionsUUID
 {
-    public static boolean isEnabled()
-    {
-        return org.bukkit.Bukkit.getServer().getPluginManager().isPluginEnabled("Factions");
-    }
+// --Commented out by Inspection START (03/08/2018 16:58):
+//    public static boolean isEnabled()
+//    {
+//        return org.bukkit.Bukkit.getServer().getPluginManager().isPluginEnabled("Factions");
+//    }
+// --Commented out by Inspection STOP (03/08/2018 16:58)
 
     public static boolean hasfaction(Player player){
         return FPlayers.getInstance().getByPlayer(player).hasFaction();
@@ -24,21 +26,11 @@ class FactionsUUID
         Faction p = FPlayers.getInstance().getByPlayer(player).getFaction();
         Faction o = FPlayers.getInstance().getByPlayer(other).getFaction();
         Relation r = FPlayers.getInstance().getByPlayer(player).getRelationTo(FPlayers.getInstance().getByPlayer(other));
-        if (ChatColor.stripColor(o.getTag()).equalsIgnoreCase("Wilderness")) {
-            return false;
-        }
-        return p == o || r.isAlly() && r.isAlly();
+        return !ChatColor.stripColor(o.getTag()).equalsIgnoreCase("Wilderness") && (p == o || r.isAlly());
     }
 
     public static boolean inTerritory(Player P) {
-        if (ChatColor.stripColor(FPlayers.getInstance().getByPlayer(P).getFaction().getTag()).equalsIgnoreCase("Wilderness")) {
-            return false;
-        }
-        return ChatColor.stripColor(FPlayers.getInstance().getByPlayer(P).getFaction().getTag()).equalsIgnoreCase("SafeZone") || FPlayers.getInstance().getByPlayer(P).isInOwnTerritory() || FPlayers.getInstance().getByPlayer(P).isInAllyTerritory();
-    }
-
-    public static boolean inWarzone(Player p) {
-        return false;
+        return !ChatColor.stripColor(FPlayers.getInstance().getByPlayer(P).getFaction().getTag()).equalsIgnoreCase("Wilderness") && (ChatColor.stripColor(FPlayers.getInstance().getByPlayer(P).getFaction().getTag()).equalsIgnoreCase("SafeZone") || FPlayers.getInstance().getByPlayer(P).isInOwnTerritory() || FPlayers.getInstance().getByPlayer(P).isInAllyTerritory());
     }
 
     public static boolean canBreakBlock(Player player, Block block)

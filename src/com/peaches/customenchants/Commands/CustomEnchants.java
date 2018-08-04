@@ -103,12 +103,12 @@ public class CustomEnchants implements org.bukkit.command.CommandExecutor {
                     newEnchant = newEnchant.substring(0, 1).toUpperCase() + newEnchant.substring(1).toLowerCase();
                     if (plugin.getConfig().getString("Translate." + newEnchant) == null) {
                         p.sendMessage(utils.prefix() +
-                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant").toLowerCase()
+                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant")
                                         .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", Enchant)));
                     } else {
                         p.sendMessage(utils.prefix() +
-                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant").toLowerCase()
-                                        .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", java.lang.String.valueOf(plugin.getConfig().getString("Translate." + newEnchant)) + " " + Enchant.substring(newEnchant.length(), Enchant.length()))));
+                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant")
+                                        .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", java.lang.String.valueOf(plugin.getConfig().getString("Translate." + newEnchant)) + " " + Enchant.substring(newEnchant.length()))));
                     }
                     return false;
                 }
@@ -171,7 +171,7 @@ public class CustomEnchants implements org.bukkit.command.CommandExecutor {
                 if (ConfigManager.getInstance().getCustomEncants().contains("Enchantments." + args[1])) {
                     ConfigManager.getInstance().getCustomEncants().set("Enchantments." + args[1] + ".Enabled", true);
                     cs.sendMessage(utils.prefix() + ChatColor.translateAlternateColorCodes('&',
-                            this.messages.getString("DisableEnchant").toLowerCase().replace("%enchant%", arg1)));
+                            this.messages.getString("DisableEnchant").replace("%enchant%", arg1)));
                 }
                 cs.sendMessage(utils.prefix()
                         + ChatColor.translateAlternateColorCodes('&', this.messages.getString("UnknownEnchant")));
@@ -186,7 +186,7 @@ public class CustomEnchants implements org.bukkit.command.CommandExecutor {
                 if (ConfigManager.getInstance().getCustomEncants().contains("Enchantments." + args[1])) {
                     ConfigManager.getInstance().getCustomEncants().set("Enchantments." + args[1] + ".Enabled", false);
                     cs.sendMessage(utils.prefix() + ChatColor.translateAlternateColorCodes('&',
-                            this.messages.getString("DisableEnchant").toLowerCase().replace("%enchant%", arg1)));
+                            this.messages.getString("DisableEnchant").replace("%enchant%", arg1)));
                 }
                 cs.sendMessage(utils.prefix()
                         + ChatColor.translateAlternateColorCodes('&', this.messages.getString("UnknownEnchant")));
@@ -214,7 +214,7 @@ public class CustomEnchants implements org.bukkit.command.CommandExecutor {
                                     return false;
                                 }
                                 cs.sendMessage(utils.prefix() + ChatColor.translateAlternateColorCodes('&',
-                                        this.messages.getString("GivePlayerEnchant").toLowerCase()
+                                        this.messages.getString("GivePlayerEnchant")
                                                 .replace("%player%", args[1]).replace("%enchant%",
                                                 java.lang.String.valueOf(Enchant) +
                                                         utils.convertPower(

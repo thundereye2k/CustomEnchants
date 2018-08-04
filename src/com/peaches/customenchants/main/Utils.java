@@ -16,13 +16,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class Utils implements Listener {
-    public static final HashMap<String, String> desc = new HashMap<>();
-    public static final HashMap<String, String> type = new HashMap<>();
-    private static final ArrayList<String> Abilities_List = new ArrayList<>();
-    private final static int CENTER_PX = 154;
+    public final HashMap<String, String> type = new HashMap<>();
     private static Main plugin;
 
     private final FileConfiguration enchants = ConfigManager.getInstance().getCustomEncants();
@@ -171,7 +171,7 @@ public class Utils implements Listener {
         if (i.equals("IV")) {
             return 4;
         }
-        if (i.equals("X")) {
+        if (i.equals("V")) {
             return 5;
         }
         if (i.equals("XI")) {
@@ -388,18 +388,8 @@ public class Utils implements Listener {
                 removelore.add(l);
             }
         }
-        String[] enchant = i.split(" ");
-        for (String l : Abilities_List) {
-            for (String l1 : lore) {
-                if (ChatColor.stripColor(l1).toLowerCase().contains(ChatColor.stripColor(l).toLowerCase())) {
-                    removelore.add(l1);
-                }
-            }
-        }
         for (String l : removelore) {
-            if (lore.contains(l)) {
-                lore.remove(l);
-            }
+            lore.remove(l);
         }
 
 
@@ -633,29 +623,9 @@ public class Utils implements Listener {
         return inv;
     }
 
-    public String getOrigionalEnchant(String Enchant) {
-        int length = Enchant.length();
-        String newEnchant = Enchant;
-        for (int counter1 = 1; counter1 <= length; counter1++) {
-            length = newEnchant.length();
-            newEnchant = Enchant.substring(0, length - 1);
-            Bukkit.broadcastMessage(newEnchant);
-            for (String e : type.keySet()) {
-                if (e.toLowerCase().equalsIgnoreCase(newEnchant.toLowerCase())) {
-                    return newEnchant;
-                }
-            }
-        }
-        return null;
-    }
-
     //TODO Fix this
     public Inventory showTierList(int no, int Tier) {
         List<?> Enchants = plugin.getConfig().getList("Tiers.Tier" + Tier);
-        Set<String> stringSet = plugin.getConfig().getConfigurationSection("Description").getKeys(false);
-        for (String type : stringSet) {
-            desc.put(type, plugin.getConfig().getString("Description." + type));
-        }
 
         int i = 0;
         Inventory inv = Bukkit.createInventory(null, 54, getTitle());
@@ -666,7 +636,7 @@ public class Utils implements Listener {
                     if (ConfigManager.getInstance().getCustomEncants().getBoolean("Enchantments." + Enchant + ".Enabled")) {
                         if (Enchants.contains(Enchant + convertPower(Integer.parseInt(counter)))) {
                             inv.addItem(getDisplayItem(plugin.getConfig().getString("Translate." + Enchant),
-                                    convertPower(Integer.parseInt(counter)), type.get(Enchant), desc.get(Enchant + convertPower(Integer.parseInt(counter)))));
+                                    convertPower(Integer.parseInt(counter)), type.get(Enchant), ConfigManager.getInstance().getCustomEncants().getString("Enchantments." + Enchant + ".description")));
                         }
                     }
                 }

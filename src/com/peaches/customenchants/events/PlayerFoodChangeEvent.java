@@ -1,7 +1,6 @@
 package com.peaches.customenchants.events;
 
 import com.peaches.customenchants.main.ConfigManager;
-import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -11,13 +10,11 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import java.util.List;
 
 public class PlayerFoodChangeEvent implements org.bukkit.event.Listener {
-    private static Main plugin;
     private static Utils utils;
     private final FileConfiguration enchants = ConfigManager.getInstance().getCustomEncants();
 
 
-    public PlayerFoodChangeEvent(Main pl, Utils u) {
-        plugin = pl;
+    public PlayerFoodChangeEvent(Utils u) {
         utils = u;
     }
 

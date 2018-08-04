@@ -2,6 +2,7 @@ package com.peaches.customenchants.ParticleEffects;
 
 import com.peaches.customenchants.Support.Version;
 import com.peaches.customenchants.Support.nms.*;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 public class Frosty {
@@ -55,6 +56,10 @@ public class Frosty {
                     net.minecraft.server.v1_11_R1.EnumParticle.SNOW_SHOVEL,
                     p.getLocation().add(0.0D, 2.6D, 0.0D), 1.2F, 0.005F, 1.2F, 0.05F,
                     1);
+        }
+        if(Version.getVersion().equals(Version.v1_13_R1)){
+            p.spawnParticle(Particle.SNOW_SHOVEL, p.getLocation().add(0.0D, 2.6D, 0.0D),  1);
+
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.peaches.customenchants.listeners;
 
 import com.peaches.customenchants.Support.Vault;
+import com.peaches.customenchants.Support.Version;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
@@ -8,6 +9,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -141,12 +143,18 @@ public class TierChoose implements org.bukkit.event.Listener {
                     newEnchant = newEnchant.substring(0, 1).toUpperCase() + newEnchant.substring(1).toLowerCase();
                     if (plugin.getConfig().getString("Translate." + newEnchant) == null) {
                         p.sendMessage(utils.prefix() +
-                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant").toLowerCase()
+
+                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant")
                                         .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", Enchant)));
                     } else {
                         p.sendMessage(utils.prefix() +
-                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant").toLowerCase()
-                                        .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", java.lang.String.valueOf(plugin.getConfig().getString("Translate." + newEnchant)) + " " + Enchant.substring(newEnchant.length(), Enchant.length()))));
+                                ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant")
+                                        .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", java.lang.String.valueOf(plugin.getConfig().getString("Translate." + newEnchant)) + " " + Enchant.substring(newEnchant.length()))));
+                    }
+                    if ((Version.getVersion().equals(Version.v1_7_R4)) || (Version.getVersion().equals(Version.v1_8_R1)) || (Version.getVersion().equals(Version.v1_8_R2)) || (Version.getVersion().equals(Version.v1_8_R3))) {
+                        p.playSound(p.getLocation(), Sound.valueOf("LEVEL_UP"), 10.0F, 10.0F);
+                    }else{
+                        p.playSound(p.getLocation(), Sound.valueOf("ENTITY_LEVEL_UP"), 10.0F, 10.0F);
                     }
                 }
             }

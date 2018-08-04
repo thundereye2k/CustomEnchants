@@ -1,7 +1,6 @@
 package com.peaches.customenchants.events;
 
 import com.peaches.customenchants.main.ConfigManager;
-import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -10,11 +9,9 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import java.util.List;
 
 public class PlayerItemDamagetake implements Listener {
-    private static Main plugin;
     private static Utils utils;
 
-    public PlayerItemDamagetake(Main pl, Utils u) {
-        plugin = pl;
+    public PlayerItemDamagetake(Utils u) {
         utils = u;
     }
 

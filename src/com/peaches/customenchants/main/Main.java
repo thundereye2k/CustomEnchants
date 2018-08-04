@@ -6,7 +6,6 @@ import com.peaches.customenchants.Commands.Tinker;
 import com.peaches.customenchants.Commands.gkits;
 import com.peaches.customenchants.ParticleEffects.Frosty;
 import com.peaches.customenchants.Support.*;
-import com.peaches.customenchants.api.API;
 import com.peaches.customenchants.events.*;
 import com.peaches.customenchants.listeners.CrystalUse;
 import com.peaches.customenchants.listeners.GkitsListner;
@@ -89,7 +88,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
             URL checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=38733");
             URLConnection con = checkURL.openConnection();
             String newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            if (getDescription().getVersion() != newVersion) {
+            if (!getDescription().getVersion().equals(newVersion)) {
                 update();
             }
         } catch (IOException ignored) {
@@ -130,21 +129,20 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     private void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new Utils(this), this);
-        pm.registerEvents(new API(this), this);
         pm.registerEvents(new CrystalUse(this, utils), this);
         pm.registerEvents(new TierChoose(this, utils), this);
         pm.registerEvents(new GkitsListner(this, utils), this);
         pm.registerEvents(new TinkererListner(this, utils), this);
         pm.registerEvents(new ArmorListener(), this);
         pm.registerEvents(new ArmorEquipt(this, utils), this);
-        pm.registerEvents(new PlayerDeathEvent(this, utils), this);
+        pm.registerEvents(new PlayerDeathEvent(utils), this);
         pm.registerEvents(new PlayerDamageEvent(this, utils), this);
-        pm.registerEvents(new PlayerFoodChangeEvent(this, utils), this);
+        pm.registerEvents(new PlayerFoodChangeEvent(utils), this);
         pm.registerEvents(new OnShootBow(this, utils), this);
         pm.registerEvents(new OnBlockBreak(this, utils), this);
         pm.registerEvents(new CrystalSaftey(utils), this);
-        pm.registerEvents(new PlayerItemDamagetake(this, utils), this);
-        pm.registerEvents(new PlayerFish(this, utils), this);
+        pm.registerEvents(new PlayerItemDamagetake(utils), this);
+        pm.registerEvents(new PlayerFish(utils), this);
         if (Support.AAC()) {
             pm.registerEvents(new AACSupport(), this);
         }
@@ -180,7 +178,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
 
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
             if (proximity) {
-                Boolean i = true;
+                boolean i = true;
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (b.getLocation().getWorld().equals(p.getLocation().getWorld())) {
                         if ((Math.sqrt(p.getLocation().distanceSquared(
@@ -212,7 +210,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
             BlockTask.put(loc, new BukkitRunnable() {
                 public void run() {
                     if (proximity) {
-                        Boolean i = true;
+                        boolean i = true;
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             if (p.getLocation().getWorld().equals(loc.getWorld())) {
                                 if (!(Math.sqrt(p.getLocation().distanceSquared(
@@ -270,9 +268,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     }
 
     public void removepenetrate(String player) {
-        if (Penetrate.containsKey(player)) {
-            Penetrate.remove(player);
-        }
+        Penetrate.remove(player);
     }
 
     public boolean containspenetrate(String player) {
@@ -288,9 +284,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     }
 
     public void removefly(String player) {
-        if (fly.contains(player)) {
-            fly.remove(player);
-        }
+        fly.remove(player);
     }
 
     public boolean containsfly(String player) {
@@ -423,9 +417,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     }
 
     public void removensnow(String player) {
-        if (snow.contains(player)) {
-            snow.remove(player);
-        }
+        snow.remove(player);
     }
 
     public void removeblocktask(Location loc) {
@@ -464,7 +456,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                 return;
             }
             for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                Double i = getConfig().getDouble("Options.DefaultHearts");
+                double i = getConfig().getDouble("Options.DefaultHearts");
                 if ((p.getInventory().getBoots() != null)
                         && (p.getInventory().getBoots().getItemMeta().getLore() != null)) {
                     for (String Enchant : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments").getKeys(false)) {
@@ -563,7 +555,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                     }
                 }
             }
-        }, 0L, 5L);
+        }, 0L, 10L);
     }
 
 
@@ -576,7 +568,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                     }
                 }
             }
-        }, 0L, 0L);
+        }, 0L, 10L);
     }
 
     private void registerExplode() {
@@ -591,7 +583,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                     }
                 }
             }
-        }, 0L, 10L);
+        }, 0L, 20L);
     }
 
     private void registerSnow(JavaPlugin plugin) {
@@ -630,7 +622,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                                                 } else {
                                                     addblock(block, Material.PACKED_ICE, true);
                                                 }
-                                            } else {
                                             }
                                         }
                                     } else {

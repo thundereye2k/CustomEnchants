@@ -1,7 +1,6 @@
 package com.peaches.customenchants.events;
 
 import com.peaches.customenchants.main.ConfigManager;
-import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -13,11 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class PlayerFish implements Listener {
-    private static Main plugin;
     private static Utils utils;
 
-    public PlayerFish(Main pl, Utils u) {
-        plugin = pl;
+    public PlayerFish(Utils u) {
         utils = u;
     }
 

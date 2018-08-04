@@ -44,6 +44,7 @@ public class Support {
         return Bukkit.getServer().getPluginManager().getPlugin("Kingdoms") != null;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean WorldEdit() {
         return Bukkit.getServer().getPluginManager().getPlugin("WorldEdit") != null;
     }
@@ -133,11 +134,9 @@ public class Support {
                 return FactionsUUID.inTerritory(player);
             }
 
-            if ((factions.getDescription().getWebsite() != null)
+            return (factions.getDescription().getWebsite() != null)
                     && (factions.getDescription().getAuthors().contains("Cayorion"))
-                    && (FactionsSupport.inTerritory(player))) {
-                return true;
-            }
+                    && (FactionsSupport.inTerritory(player));
         }
         return false;
     }
