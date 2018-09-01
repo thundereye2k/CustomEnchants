@@ -5,7 +5,7 @@ import com.peaches.customenchants.Support.Version;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -150,11 +150,6 @@ public class TierChoose implements org.bukkit.event.Listener {
                         p.sendMessage(utils.prefix() +
                                 ChatColor.translateAlternateColorCodes('&', this.messages.getString("GiveEnchant")
                                         .replace("%tier%", plugin.getConfig().getString("Options.Tier" + i + "MessageName")).replace("%enchant%", java.lang.String.valueOf(plugin.getConfig().getString("Translate." + newEnchant)) + " " + Enchant.substring(newEnchant.length()))));
-                    }
-                    if ((Version.getVersion().equals(Version.v1_7_R4)) || (Version.getVersion().equals(Version.v1_8_R1)) || (Version.getVersion().equals(Version.v1_8_R2)) || (Version.getVersion().equals(Version.v1_8_R3))) {
-                        p.playSound(p.getLocation(), Sound.valueOf("LEVEL_UP"), 10.0F, 10.0F);
-                    }else{
-                        p.playSound(p.getLocation(), Sound.valueOf("ENTITY_LEVEL_UP"), 10.0F, 10.0F);
                     }
                 }
             }

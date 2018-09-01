@@ -5,8 +5,8 @@ import com.peaches.customenchants.Support.Vault;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,7 +30,7 @@ public class CustomEnchants implements org.bukkit.command.CommandExecutor {
     public boolean onCommand(CommandSender cs, org.bukkit.command.Command cmd, String String, String[] args) {
         if (args.length == 0) {
 
-            if (cs.hasPermission("customenchants.command")) {
+            if (cs.hasPermission("customenchants.command") || !plugin.getConfig().getBoolean("Options.GUIPerm")) {
                 if (utils.Tier()) {
                     if (cs instanceof Player) {
                         Player p = (Player) cs;

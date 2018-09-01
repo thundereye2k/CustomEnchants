@@ -66,6 +66,10 @@ Options:
   DefaultHearts: 20
 # What should the radius be for enchants like Saviour
   AllyRadius: 10
+# How many customenchants would you like to be added to an item enchanted on the enchanting table (Comming Soon)
+  EnchantingTableAmount: 0-3
+# Do you want there to be a permission to open the tierGUi
+  GUIPerm: false
 # What Items do you want to be in each tier?
 Tiers:
   Tier1:

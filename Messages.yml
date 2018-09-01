@@ -1,11 +1,11 @@
 NeedMoreXp: '&7 You Need More XP Levels'
-GiveEnchant: '&7 You have purchased a &c%Tier% &7enchant and recived a &c%Enchant%
+GiveEnchant: '&7 You have purchased a &c%tier% &7enchant and recived a &c%enchant%
   &7enchant!'
 StartReload: '&7 Reloading Plugin...'
 EndReload: '&7 Reload Complete took %ms%ms.'
 NoPermission: '&7 Insufficient Permission!'
-EnableEnchant: '&7 %Enchant% &7Enchant Enabled!'
-DisableEnchant: '&7 %Enchant% &7Enchant Disabled!'
+EnableEnchant: '&7 %enchant% &7Enchant Enabled!'
+DisableEnchant: '&7 %enchant% &7Enchant Disabled!'
 UnknownEnchant: '&7 Unknown Enchant!'
 UnknownPlayer: '&7 Unknown Player!'
 EnchantDisabled: '&7 That Enchant Is Disabled!'

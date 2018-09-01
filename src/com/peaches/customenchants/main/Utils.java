@@ -3,7 +3,7 @@ package com.peaches.customenchants.main;
 import com.google.common.collect.Lists;
 import com.peaches.customenchants.Support.Version;
 import com.peaches.customenchants.Support.nms.*;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -33,7 +33,6 @@ class Updater {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "rl");
             }
         } catch (ConnectionFailedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

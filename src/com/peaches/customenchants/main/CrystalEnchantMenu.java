@@ -1,7 +1,5 @@
 package com.peaches.customenchants.main;
 
-import com.peaches.customenchants.Support.Version;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -35,11 +33,6 @@ public class CrystalEnchantMenu {
             player.getInventory().removeItem(this.crystal);
         }
         player.closeInventory();
-        if ((Version.getVersion().equals(Version.v1_7_R4)) || (Version.getVersion().equals(Version.v1_8_R1)) || (Version.getVersion().equals(Version.v1_8_R2)) || (Version.getVersion().equals(Version.v1_8_R3))) {
-            player.playSound(player.getLocation(), Sound.valueOf("ANVIL_USE"), 10.0F, 10.0F);
-        }else{
-            player.playSound(player.getLocation(), Sound.valueOf("BLOCK_ANVIL_USE"), 10.0F, 10.0F);
-        }
         player.updateInventory();
     }
 

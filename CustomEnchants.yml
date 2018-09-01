@@ -334,13 +334,13 @@ Enchantments:
     levels:
       1:
         effects:
-        - 'POTION:ABSORBTION:1:10'
-        - 'POTION:RESISTANCE:1:10'
+        - 'POTION:ABSORPTION:1:10'
+        - 'POTION:DAMAGE_RESISTANCE:1:10'
         - 'POTION:REGENERATION:1:10'
       2:
         effects:
-        - 'POTION:ABSORBTION:2:10'
-        - 'POTION:RESISTANCE:2:10'
+        - 'POTION:ABSORPTION:2:10'
+        - 'POTION:DAMAGE_RESISTANCE:2:10'
         - 'POTION:REGENERATION:2:10'
   Inquisitive:
     Enabled: true
@@ -459,7 +459,7 @@ Enchantments:
         - 'PARTICLE:FLAME'
   Wings:
     Enabled: true
-    description: 'Chance for your arrows to explode'
+    description: 'Allows you to fly in your territory'
     Type: 'Boots'
     Trigger: 'EQUIPT'
     levels:
@@ -509,7 +509,7 @@ Enchantments:
         - 'HEAL:8:%victim%'
   Cook:
     Enabled: true
-    description: 'Automaticly Cooks your fish'
+    description: 'Automatically Cooks your fish'
     Type: 'Rod'
     Trigger: 'FISH_CATCH'
     levels:

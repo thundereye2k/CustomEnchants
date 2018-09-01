@@ -4,7 +4,8 @@ import ca.thederpygolems.armorequip.ArmorListener;
 import com.peaches.customenchants.Commands.CustomEnchants;
 import com.peaches.customenchants.Commands.Tinker;
 import com.peaches.customenchants.Commands.gkits;
-import com.peaches.customenchants.ParticleEffects.Frosty;
+import com.peaches.customenchants.Effects.*;
+import com.peaches.customenchants.ParticleEffects.Frosty_Particle;
 import com.peaches.customenchants.Support.*;
 import com.peaches.customenchants.events.*;
 import com.peaches.customenchants.listeners.CrystalUse;
@@ -55,7 +56,9 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     private final HashMap<Location, Material> BlockData = new HashMap<>();
     private final HashMap<Location, BlockState> BlockState = new HashMap<>();
     public final HashMap<Player, String> ParticleEffects = new HashMap<>();
-    private final Utils utils = new Utils(this);
+    public final Utils utils = new Utils(this);
+
+    public static Main Instance;
 
     public Main(Main pl) {
     }
@@ -68,6 +71,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         saveDefaultConfig();
         ConfigManager.getInstance().setup(this);
         checkconfig();
+        registerEffects();
         registerExplode();
         registerPaticle();
         registerPaticleEffects();
@@ -102,6 +106,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         System.out.print("CustomEnchants Enabled!");
         System.out.print("");
         System.out.print("-------------------------------");
+        Instance = this;
     }
 
     public void onDisable() {
@@ -126,6 +131,25 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         }
     }
 
+    private void registerEffects() {
+        new EffectManager();
+        new Frosty();
+        new Potion();
+        new Fly();
+        new PARTICLE();
+        new MAXHP_INCREASE();
+        new Smelt();
+        new Message();
+        new Explode();
+        new Player_Command();
+        new Console_Command();
+        new Repair();
+        new Lightning();
+        new Fire();
+        new Heal();
+        new Frostbite();
+    }
+
     private void registerEvents() {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new Utils(this), this);
@@ -143,6 +167,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         pm.registerEvents(new CrystalSaftey(utils), this);
         pm.registerEvents(new PlayerItemDamagetake(utils), this);
         pm.registerEvents(new PlayerFish(utils), this);
+        pm.registerEvents(new OnItemEnchant(), this);
         if (Support.AAC()) {
             pm.registerEvents(new AACSupport(), this);
         }
@@ -241,7 +266,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         }
     }
 
-    public void FrostBite( Player p, int time) {
+    public void FrostBite(Player p, int time) {
         if (Support.canBreakBlock(p, p.getLocation().clone().add(0, -1, 0).getBlock())) {
             addblock(Material.PACKED_ICE, p.getLocation().clone().add(0, -1, 0).getBlock().getType(), p.getLocation().clone().add(0, -1, 0), time, false);
         }
@@ -377,41 +402,6 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         } catch (IOException ignored) {
         }
     }
-
-    @EventHandler
-    public void onmove( PlayerMoveEvent e) {
-        Player p = e.getPlayer();
-        for (String Enchant : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments").getKeys(false)) {
-            if (ConfigManager.getInstance().getCustomEncants().getString("Enchantments." + Enchant + ".Trigger").equalsIgnoreCase("EQUIPT")) {
-                for (String i : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments." + Enchant + ".levels").getKeys(false)) {
-                    if (utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getItemInHand()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getHelmet()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getChestplate()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getLeggings()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getBoots())) {
-                        if (ConfigManager.getInstance().getCustomEncants().getBoolean("Enchantments." + Enchant + ".Enabled")) {
-                            List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
-                            for (String effect : effects) {
-                                if (effect.toUpperCase().contains("FLY")) {
-                                    if (fly.contains(p.getName())) {
-                                        if (!Support.inTerritory(p)) {
-                                            fly.remove(p.getName());
-                                            p.setAllowFlight(false);
-                                            p.setFlying(false);
-                                        }
-
-                                    } else {
-                                        if (Support.inTerritory(p) && Support.hasfaction(p)) {
-                                            fly.add(p.getName());
-                                            p.setAllowFlight(true);
-                                            p.setFlying(true);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     public void addsnow(String player) {
         snow.add(player);
     }
@@ -564,11 +554,11 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
             if (!ParticleEffects.isEmpty() && ParticleEffects != null) {
                 for (Player p : ParticleEffects.keySet()) {
                     if (ParticleEffects.get(p).equalsIgnoreCase("FROSTY")) {
-                        Frosty.getInstance().display(p);
+                        Frosty_Particle.getInstance().display(p);
                     }
                 }
             }
-        }, 0L, 10L);
+        }, 0L, 5L);
     }
 
     private void registerExplode() {
@@ -580,6 +570,45 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                                 arrow.getLocation().getZ(), 5.0F, false, false);
                         Explode.remove(arrow);
                         return;
+                    }
+                }
+            }
+        }, 0L, 2L);
+    }
+
+    private void registerTerritory() {
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            if (Bukkit.getOnlinePlayers() != null) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    for (String Enchant : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments").getKeys(false)) {
+                        if (ConfigManager.getInstance().getCustomEncants().getString("Enchantments." + Enchant + ".Trigger").equalsIgnoreCase("EQUIPT")) {
+                            for (String i : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments." + Enchant + ".levels").getKeys(false)) {
+                                if (utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getItemInHand()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getHelmet()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getChestplate()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getLeggings()) || utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), p.getInventory().getBoots())) {
+                                    if (ConfigManager.getInstance().getCustomEncants().getBoolean("Enchantments." + Enchant + ".Enabled")) {
+                                        List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
+                                        for (String effect : effects) {
+                                            if (effect.toUpperCase().contains("FLY")) {
+                                                if (fly.contains(p.getName())) {
+                                                    if (!Support.inTerritory(p)) {
+                                                        fly.remove(p.getName());
+                                                        p.setAllowFlight(false);
+                                                        p.setFlying(false);
+                                                    }
+
+                                                } else {
+                                                    if (Support.inTerritory(p) && Support.hasfaction(p)) {
+                                                        fly.add(p.getName());
+                                                        p.setAllowFlight(true);
+                                                        p.setFlying(true);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -659,7 +688,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     }
 
 
-    private List<Block> getSquare( Location loc, Player p) {
+    private List<Block> getSquare(Location loc, Player p) {
         List<Block> blocks = com.google.common.collect.Lists.newArrayList();
         for (int x = 2 * -1; x <= 2; x++) {
             for (int y = 2 * -1; y <= 2; y++) {
@@ -679,11 +708,11 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     }
 
     @EventHandler
-    public void onJoin( PlayerJoinEvent e) {
+    public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if ((p.getInventory().getBoots() != null) && (p.getInventory().getBoots().getItemMeta() != null)
                 && (p.getInventory().getBoots().getItemMeta().getLore() != null)
-                && (utils.hasenchant(getConfig().getString("Translate.Frosty") + "I", p.getInventory().getBoots()))) {
+                && (utils.hasenchant(getConfig().getString("Translate.Frosty_Particle") + "I", p.getInventory().getBoots()))) {
             addsnow(p.getName());
         }
     }

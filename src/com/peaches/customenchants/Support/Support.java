@@ -75,7 +75,10 @@ public class Support {
     }
 
     public static boolean allowsBreak(Location loc, Player p) {
-        return !WorldGuard() || !WorldEdit() || WorldGuard.allowsBreak(loc, p);
+        if(WorldGuard()){
+            return WorldGuard.allowsBreak(loc, p);
+        }
+        return true;
     }
 
     public static boolean isFriendly(Entity P, Entity O) {

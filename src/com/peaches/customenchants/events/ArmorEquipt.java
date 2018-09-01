@@ -1,6 +1,7 @@
 package com.peaches.customenchants.events;
 
 import ca.thederpygolems.armorequip.ArmorEquipEvent;
+import com.peaches.customenchants.Effects.EffectManager;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
@@ -8,10 +9,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.List;
+import java.util.Random;
 
 public class ArmorEquipt implements Listener {
     private static Main plugin;
@@ -24,7 +24,8 @@ public class ArmorEquipt implements Listener {
 
     @SuppressWarnings("unchecked")
     @EventHandler
-    public void onEquip( ArmorEquipEvent e) {
+    public void onEquip(ArmorEquipEvent e) {
+        Random r = new Random();
         Player p = e.getPlayer();
         ItemStack NewItem = e.getNewArmorPiece();
         ItemStack OldItem = e.getOldArmorPiece();
@@ -33,61 +34,37 @@ public class ArmorEquipt implements Listener {
                 for (String i : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments." + Enchant + ".levels").getKeys(false)) {
                     if (utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), OldItem)) {
                         if (ConfigManager.getInstance().getCustomEncants().getBoolean("Enchantments." + Enchant + ".Enabled")) {
-                            List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
-                            for (String effect : effects) {
-                                String[] effect1 = effect.split(":");
-                                if (effect.startsWith("POTION:")) {
-                                    if (PotionEffectType.getByName(effect1[1].toUpperCase()) != null) {
-                                        p.removePotionEffect(PotionEffectType.getByName(effect1[1].toUpperCase()));
-                                    } else {
-                                        System.out.print("Unknown Potion effect " + effect1[1].toUpperCase());
+                            if (ConfigManager.getInstance().getCustomEncants().contains("Enchantments." + Enchant + ".levels." + i + ".chance")) {
+                                if (1 + r.nextInt(100) < ConfigManager.getInstance().getCustomEncants().getInt("Enchantments." + Enchant + ".levels." + i + ".chance")) {
+                                    List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
+                                    for (String effect : effects) {
+                                        String[] effect1 = effect.split(":");
+                                        EffectManager.getInstance.remove(p, null, effect1, Enchant);
                                     }
                                 }
-                                if (effect.contains("FROSTY")) {
-                                    plugin.removensnow(e.getPlayer().getName());
-                                }
-                                if (effect.contains("MAXHP_INCREASE:")) {
-                                    p.setMaxHealth(p.getMaxHealth() - Integer.parseInt(effect1[1]));
-                                }
-                                if (effect.contains("PARTICLE:")) {
-                                    if (effect1[1] != null) {
-                                        plugin.ParticleEffects.remove(p);
-                                    }
-                                }
-                                if (effect.contains("FLY")) {
-                                    if (plugin.containsfly(p.getName())) {
-                                        plugin.removefly(p.getName());
-                                    }
+                            } else {
+                                List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
+                                for (String effect : effects) {
+                                    String[] effect1 = effect.split(":");
+                                    EffectManager.getInstance.remove(p, null, effect1, Enchant);
                                 }
                             }
                         }
                     }
                     if (utils.hasenchant(Enchant + " " + utils.convertPower(Integer.parseInt(i)), NewItem)) {
                         if (ConfigManager.getInstance().getCustomEncants().getBoolean("Enchantments." + Enchant + ".Enabled")) {
-                            List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
-                            for (String effect : effects) {
-                                String[] effect1 = effect.split(":");
-                                if (effect.startsWith("POTION:")) {
-                                    if (PotionEffectType.getByName(effect1[1].toUpperCase()) != null) {
-                                        p.addPotionEffect(
-                                                new PotionEffect(PotionEffectType.getByName(effect1[1].toUpperCase()), 999999, -1 + Integer.parseInt(effect1[2]), false));
-                                    } else {
-                                        System.out.print("Unknown Potion effect " + effect1[1].toUpperCase());
+                            if (ConfigManager.getInstance().getCustomEncants().contains("Enchantments." + Enchant + ".levels." + i + ".chance")) {
+                                if (1 + r.nextInt(100) < ConfigManager.getInstance().getCustomEncants().getInt("Enchantments." + Enchant + ".levels." + i + ".chance")) {
+                                    List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
+                                    for (String effect : effects) {
+                                        String[] effect1 = effect.split(":");
+                                        EffectManager.getInstance.add(p, null, null, null, effect1, NewItem, Enchant);
                                     }
                                 }
-                                if (effect.contains("FROSTY")) {
-                                    plugin.addsnow(e.getPlayer().getName());
-                                }
-                                if (effect.contains("MAXHP_INCREASE:")) {
-                                    p.setMaxHealth(p.getMaxHealth() + Integer.parseInt(effect1[1]));
-                                }
-                                if (effect.contains("PARTICLE:")) {
-                                    if (effect1[1] != null) {
-                                        plugin.ParticleEffects.put(p, effect1[1]);
-                                    }
-                                }
-                                if (effect.contains("FLY")) {
-                                    plugin.addfly(p.getName());
+                            }else{List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
+                                for (String effect : effects) {
+                                    String[] effect1 = effect.split(":");
+                                    EffectManager.getInstance.add(p, null, null, null, effect1, NewItem, Enchant);
                                 }
                             }
                         }
