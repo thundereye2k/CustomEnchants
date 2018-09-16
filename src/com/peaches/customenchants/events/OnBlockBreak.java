@@ -65,6 +65,10 @@ public class OnBlockBreak implements Listener {
             block1.setType(Material.AIR);
             plugin.removeblocktask(block1.getLocation());
         }
+        if(plugin.containsblockstate(block1.getLocation())){
+            e.setCancelled(true);
+            block1.setType(Material.AIR);
+        }
         for (String Enchant : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments").getKeys(false)) {
             if (ConfigManager.getInstance().getCustomEncants().getString("Enchantments." + Enchant + ".Trigger").equalsIgnoreCase("BLOCK_BREAK")) {
                 for (String i : ConfigManager.getInstance().getCustomEncants().getConfigurationSection("Enchantments." + Enchant + ".levels").getKeys(false)) {

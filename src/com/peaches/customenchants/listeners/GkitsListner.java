@@ -3,9 +3,11 @@ package com.peaches.customenchants.listeners;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Main;
 import com.peaches.customenchants.main.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,7 +31,7 @@ public class GkitsListner implements Listener {
     }
 
     @EventHandler
-    public void onClick( InventoryClickEvent e) {
+    public void onClick(InventoryClickEvent e) {
 
         if (e.getInventory().getTitle() != null) {
             if (e.getInventory().getTitle().equals(utils.getTitle())) {
@@ -101,10 +103,23 @@ public class GkitsListner implements Listener {
                                                                             + Enchants2[0]));
                                                         }
                                                     }
-                                                } else
-                                                    items.addEnchantment(
-                                                            org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
-                                                            Integer.parseInt(Enchants1[1]));
+                                                } else {
+                                                    try {
+                                                        int level = Integer.parseInt(Enchants1[1]);
+                                                        items.addUnsafeEnchantment(
+                                                                org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
+                                                                Integer.parseInt(Enchants1[1]));
+                                                    } catch (Exception exeption) {
+                                                        try {
+                                                            int level = utils.convertPowertoInt(Enchants1[1]);
+                                                            items.addUnsafeEnchantment(
+                                                                    org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
+                                                                    Integer.parseInt(Enchants1[1]));
+                                                        } catch (Exception exeption2) {
+
+                                                        }
+                                                    }
+                                                }
                                             }
                                         } else {
                                             String[] Enchants1 = Enchant.split(" ");
@@ -139,9 +154,21 @@ public class GkitsListner implements Listener {
                                                                     + Enchant));
                                                 }
                                             } else {
-                                                items.addEnchantment(
-                                                        org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
-                                                        Integer.parseInt(Enchants1[1]));
+                                                try {
+                                                    int level = Integer.parseInt(Enchants1[1]);
+                                                    items.addUnsafeEnchantment(
+                                                            org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
+                                                            Integer.parseInt(Enchants1[1]));
+                                                } catch (Exception exeption) {
+                                                    try {
+                                                        int level = utils.convertPowertoInt(Enchants1[1]);
+                                                        items.addUnsafeEnchantment(
+                                                                org.bukkit.enchantments.Enchantment.getByName(Enchants1[0]),
+                                                                Integer.parseInt(Enchants1[1]));
+                                                    } catch (Exception exeption2) {
+
+                                                    }
+                                                }
                                             }
                                         }
                                     }

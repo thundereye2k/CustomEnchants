@@ -1,5 +1,5 @@
 name: CustomEnchants
-version: 2.1.7
+version: 2.2.1
 description: Providing a new exciting aspect of pvp
 main: com.peaches.customenchants.main.Main
 softdepend: [Vault, Factions, AAC, NoCheatPlus, WorldEdit, WorldGuard, MVdWUpdater, Kingdoms]

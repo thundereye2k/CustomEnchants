@@ -1,7 +1,9 @@
 package com.peaches.customenchants.events;
 
+import com.peaches.customenchants.Effects.EffectManager;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Utils;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -25,6 +27,7 @@ public class PlayerItemDamagetake implements Listener {
                             List<String> effects = ConfigManager.getInstance().getCustomEncants().getStringList("Enchantments." + Enchant + ".levels." + i + ".effects");
                             for (String effect : effects) {
                                 String[] effect1 = effect.split(":");
+                                EffectManager.getInstance.add(e.getPlayer(), null, null, null, effect1, e.getPlayer().getItemInHand(), Enchant);
                                 if (effect.toUpperCase().contains("ARMOR_DAMAGE_DECREASE:")) {
                                     e.setDamage(e.getDamage() / Integer.parseInt(effect1[1]));
                                 }

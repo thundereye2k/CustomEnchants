@@ -88,41 +88,38 @@ Tiers:
   - EnlightenedI
   - CookI
   - CatchI
-  - ThunderusBlowI
+  - ThunderousBlowI
   Tier2:
   - BlazingTouchI
   - SpeedII
   - JumpII
   - MultishotI
-  - InfusionI
   - IgnitionI
   - WitherI
   - HasteI
   - LifestealII
   - JacketII
-  - CursedI
   - AssassinateI
   - CoinsI
   - HardenedII
   - PenetrateII
   - EvadeII
   - WingsI
-  - SaviorI
+  - SaviourI
   - LeaderI
   - ResistanceI
   - EnlightenedII
   - CatchII
   - FrostbiteI
   - HeadshotI
+  - InfusionI
   Tier3:
   - MultishotII
-  - InfusionII
   - WitherII
   - HasteII
   - JacketIII
   - InquisitiveI
   - InquisitiveII
-  - CursedII
   - FrostyI
   - FlareI
   - AssassinateII
@@ -130,9 +127,10 @@ Tiers:
   - HardenedIII
   - PenetrateIII
   - EvadeIII
-  - SaviorII
+  - SaviourII
   - LeaderII
   - ResistanceII
   - EnlightenedIII
   - FrostbiteII
   - HeadshotII
+  - InfusionII

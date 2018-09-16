@@ -1,5 +1,6 @@
 package com.peaches.customenchants.Support;
 
+import com.peaches.customenchants.main.Main;
 import me.konsolas.aac.api.HackType;
 import me.konsolas.aac.api.PlayerViolationEvent;
 import org.bukkit.entity.Player;
@@ -22,6 +23,7 @@ public class AACSupport implements Listener {
     @EventHandler
     public void onViolation( PlayerViolationEvent e) {
         if (AAC.contains(e.getPlayer().getName())) {
+
             if (e.getHackType().equals(HackType.NUKER) || e.getHackType().equals(HackType.FASTBREAK) || e.getHackType().equals(HackType.BADPACKETS)) {
                 e.setCancelled(true);
             }

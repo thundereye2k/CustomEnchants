@@ -1,5 +1,6 @@
 package com.peaches.customenchants.events;
 
+import com.peaches.customenchants.Effects.EffectManager;
 import com.peaches.customenchants.main.ConfigManager;
 import com.peaches.customenchants.main.Utils;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ public class PlayerFish implements Listener {
                                     ItemStack item = ((Item) e.getCaught()).getItemStack();
                                     for (String effect : effects) {
                                         String[] effect1 = effect.split(":");
+                                        EffectManager.getInstance.add(e.getPlayer(), null, null, null, effect1, e.getPlayer().getItemInHand(), Enchant);
                                         if (effect.toUpperCase().contains("COOK")) {
                                             item.setType(Material.COOKED_FISH);
                                         }

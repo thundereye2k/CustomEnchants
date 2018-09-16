@@ -1,6 +1,8 @@
 package com.peaches.customenchants.main;
 
+import ca.thederpygolems.armorequip.ArmorEquipEvent;
 import ca.thederpygolems.armorequip.ArmorListener;
+import ca.thederpygolems.armorequip.ArmorType;
 import com.peaches.customenchants.Commands.CustomEnchants;
 import com.peaches.customenchants.Commands.Tinker;
 import com.peaches.customenchants.Commands.gkits;
@@ -25,9 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -54,7 +55,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     private final ArrayList<String> snow = new ArrayList<>();
     private final HashMap<Location, BukkitRunnable> BlockTask = new HashMap<>();
     private final HashMap<Location, Material> BlockData = new HashMap<>();
-    private final HashMap<Location, BlockState> BlockState = new HashMap<>();
+    public final HashMap<Location, BlockState> BlockState = new HashMap<>();
     public final HashMap<Player, String> ParticleEffects = new HashMap<>();
     public final Utils utils = new Utils(this);
 
@@ -120,6 +121,13 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         System.out.print("");
         System.out.print("-------------------------------");
         savebal();
+    }
+
+    @EventHandler
+    public void onquit(PlayerQuitEvent e) {
+        if (snow.contains(e.getPlayer().getName())) {
+            snow.remove(e.getPlayer().getName());
+        }
     }
 
     public void settype() {
@@ -402,6 +410,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
         } catch (IOException ignored) {
         }
     }
+
     public void addsnow(String player) {
         snow.add(player);
     }
@@ -419,6 +428,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
 
     public boolean containsblocktask(Location loc) {
         return BlockTask.containsKey(loc);
+    }
+
+    public boolean containsblockstate(Location loc) {
+        return BlockState.containsKey(loc);
     }
 
     private void JacketFix() {
@@ -640,17 +653,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
                                         if ((block.getType() != Material.LAVA)
                                                 && (block.getType() != Material.STATIONARY_LAVA)) {
                                             if ((Support.allowsBreak(block.getLocation(), p) && Support.canBreakBlock(p, block))) {
-                                                if (plugin.getConfig().getBoolean("Options.UseBlockBreakEvent")) {
-                                                    Support.AddExemption(p);
-                                                    BlockBreakEvent event = new BlockBreakEvent(block, p);
-                                                    Bukkit.getPluginManager().callEvent(event);
-                                                    if (!event.isCancelled()) {
-                                                        addblock(block, Material.PACKED_ICE, true);
-                                                    }
-                                                    Support.RemoveExemption(p);
-                                                } else {
-                                                    addblock(block, Material.PACKED_ICE, true);
-                                                }
+                                                addblock(block, Material.PACKED_ICE, true);
                                             }
                                         }
                                     } else {
@@ -710,11 +713,10 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin implements Listener 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if ((p.getInventory().getBoots() != null) && (p.getInventory().getBoots().getItemMeta() != null)
-                && (p.getInventory().getBoots().getItemMeta().getLore() != null)
-                && (utils.hasenchant(getConfig().getString("Translate.Frosty_Particle") + "I", p.getInventory().getBoots()))) {
-            addsnow(p.getName());
-        }
+        Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, ArmorEquipEvent.EquipMethod.SHIFT_CLICK, ArmorType.BOOTS, p.getInventory().getBoots(), null));
+        Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, ArmorEquipEvent.EquipMethod.SHIFT_CLICK, ArmorType.LEGGINGS, p.getInventory().getLeggings(), null));
+        Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, ArmorEquipEvent.EquipMethod.SHIFT_CLICK, ArmorType.CHESTPLATE, p.getInventory().getChestplate(), null));
+        Bukkit.getServer().getPluginManager().callEvent(new ArmorEquipEvent(p, ArmorEquipEvent.EquipMethod.SHIFT_CLICK, ArmorType.HELMET, p.getInventory().getHelmet(), null));
     }
 
     private void Inventory(JavaPlugin plugin) {
